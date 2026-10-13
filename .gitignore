@@ -1,0 +1,10 @@
+.env
+enviados.csv
+venv/
+__pycache__/
+*.pyc
+log.txt
+assets/*.jpg
+assets/*.png
+assets/fonts/
+.DS_Store
