@@ -106,8 +106,14 @@ def _compose_hero_bytes(nombre, assets_dir):
     logo_top = h * LOGO_TOP_FRAC
 
     bbox = draw.textbbox((0, 0), text, font=font)
+    # Nombres largos: reducir la letra hasta que el saludo quepa en el 92 % del ancho
+    while bbox[2] - bbox[0] > w * 0.92 and font_size > 12:
+        font_size -= 1
+        font = _load_font(font_size, assets_dir)
+        bbox = draw.textbbox((0, 0), text, font=font)
     tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
-    tx = cx - tw / 2 - bbox[0]
+    # Centrado sobre el logo, pero sin salirse de la imagen
+    tx = min(max(cx - tw / 2, w * 0.04), w * 0.96 - tw) - bbox[0]
     ty = (logo_top - gap) - th - bbox[1]
 
     stroke_w = max(1, font_size // 28)
